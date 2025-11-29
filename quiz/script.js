@@ -625,7 +625,8 @@ class QuizApp {
     if (!draft) return;
 
     // Replace with your GitHub Pages URL
-    const githubPagesURL = "https://jryan23.github.io/quiz-app/";
+    const githubPagesURL = "https://jryan23.github.io/quiz-app/quiz/index.html
+";
 
     const shareText = `Take this quiz: ${githubPagesURL}#create\nDraft: "${draft.title}"`;
 
@@ -701,4 +702,5 @@ function updateQuestionCount() {
 function setDifficulty(difficulty) {
   quizApp.setDifficulty(difficulty);
 }
+
 
