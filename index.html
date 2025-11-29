@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuizMaster</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+      <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <h1 class="logo">
+          <i class="fas fa-brain"></i>
+          QuizMaster
+        </h1>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="container">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+          <div class="hero">
+            <h2 class="hero-title">Test Your Knowledge</h2>
+            <p class="hero-subtitle">
+              Challenge yourself with our interactive quiz platform
+            </p>
+
+            <div class="feature-grid">
+              <div class="feature-card" onclick="showSection('create')">
+                <div class="card-icon">
+                  <i class="fas fa-plus-circle"></i>
+                </div>
+                <h3>Create Quiz</h3>
+                <p>Build your own custom quiz</p>
+                <div class="card-arrow">
+                  <i class="fas fa-arrow-right"></i>
+                </div>
+              </div>
+
+              <div class="feature-card" onclick="showSection('generate')">
+                <div class="card-icon">
+                  <i class="fas fa-magic"></i>
+                </div>
+                <h3>Generate Quiz</h3>
+                <p>Auto-generate from categories</p>
+                <div class="card-arrow">
+                  <i class="fas fa-arrow-right"></i>
+                </div>
+              </div>
+
+              <div class="feature-card" onclick="showSection('history')">
+                <div class="card-icon">
+                  <i class="fas fa-history"></i>
+                </div>
+                <h3>History</h3>
+                <p>View your quiz history</p>
+                <div class="card-arrow">
+                  <i class="fas fa-arrow-right"></i>
+                </div>
+              </div>
+
+              <div class="feature-card" onclick="showSection('highscores')">
+                <div class="card-icon">
+                  <i class="fas fa-trophy"></i>
+                </div>
+                <h3>Leaderboard</h3>
+                <p>Check top scores</p>
+                <div class="card-arrow">
+                  <i class="fas fa-arrow-right"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Create Quiz Section -->
+        <section id="create" class="section">
+          <div class="section-header">
+            <button class="back-btn" onclick="showSection('home')">
+              <i class="fas fa-arrow-left"></i>
+            </button>
+            <h2>Create Your Quiz</h2>
+          </div>
+
+          <div class="create-layout">
+            <!-- LEFT: Create Quiz Form -->
+            <div class="create-area">
+              <div id="customQuizForm" class="custom-questions">
+                <!-- You will dynamically load question forms here later -->
+              </div>
+
+              <div class="form-actions">
+                <button class="btn btn-secondary" onclick="addCustomQuestion()">
+                  <i class="fas fa-plus"></i>
+                  Add Question
+                </button>
+
+                <button class="btn btn-warning" onclick="saveDraftQuiz()">
+                  <i class="fas fa-save"></i>
+                  Save to Drafts
+                </button>
+
+                <button class="btn btn-primary" onclick="startCustomQuiz()">
+                  <i class="fas fa-play"></i>
+                  Start Quiz
+                </button>
+              </div>
+            </div>
+
+            <!-- RIGHT: Draft Quiz List -->
+            <div class="draft-area">
+              <h3 class="draft-title">
+                <i class="fas fa-file-alt"></i> Draft Quizzes
+              </h3>
+
+              <div id="draftList" class="draft-list">
+                <!-- JS will place draft quiz cards here -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Generate Quiz Section -->
+        <section id="generate" class="section">
+          <div class="section-header">
+            <button class="back-btn" onclick="showSection('home')">
+              <i class="fas fa-arrow-left"></i>
+            </button>
+            <h2>Generate Quiz</h2>
+          </div>
+
+          <div class="generate-form">
+            <div class="generate-cards">
+              <div class="form-card">
+                <div class="card-header">
+                  <i class="fas fa-list-ol"></i>
+                  <h3>Questions</h3>
+                </div>
+                <div class="quick-select-buttons">
+                  <button
+                    class="quick-btn active"
+                    data-value="5"
+                    onclick="setQuestionCount(5)"
+                  >
+                    5
+                  </button>
+                  <button
+                    class="quick-btn"
+                    data-value="10"
+                    onclick="setQuestionCount(10)"
+                  >
+                    10
+                  </button>
+                  <button
+                    class="quick-btn"
+                    data-value="15"
+                    onclick="setQuestionCount(15)"
+                  >
+                    15
+                  </button>
+                </div>
+                <input
+                  type="number"
+                  id="numQuestions"
+                  min="1"
+                  max="50"
+                  value="5"
+                  onchange="updateQuestionCount()"
+                />
+              </div>
+
+              <div class="form-card">
+                <div class="card-header">
+                  <i class="fas fa-tags"></i>
+                  <h3>Category</h3>
+                </div>
+                <div class="select-wrapper">
+                  <select id="category"></select>
+                </div>
+              </div>
+
+              <div class="form-card">
+                <div class="card-header">
+                  <i class="fas fa-signal"></i>
+                  <h3>Difficulty</h3>
+                </div>
+                <div class="difficulty-pills">
+                  <button
+                    class="difficulty-pill active"
+                    data-value=""
+                    onclick="setDifficulty('')"
+                  >
+                    Mixed
+                  </button>
+                  <button
+                    class="difficulty-pill"
+                    data-value="easy"
+                    onclick="setDifficulty('easy')"
+                  >
+                    Easy
+                  </button>
+                  <button
+                    class="difficulty-pill"
+                    data-value="medium"
+                    onclick="setDifficulty('medium')"
+                  >
+                    Medium
+                  </button>
+                  <button
+                    class="difficulty-pill"
+                    data-value="hard"
+                    onclick="setDifficulty('hard')"
+                  >
+                    Hard
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-large" onclick="startQuiz()">
+              <i class="fas fa-rocket"></i>
+              Generate & Start Quiz
+            </button>
+          </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz" class="section">
+          <div class="quiz-header">
+            <div class="question-counter">
+              <span class="current-question">1</span>
+              <span class="question-divider">/</span>
+              <span class="total-questions">10</span>
+            </div>
+            <div class="quiz-info">
+              <div class="score-display">
+                Score: <span id="currentScore">0</span>
+              </div>
+            </div>
+          </div>
+          <div id="quizContainer"></div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results" class="section">
+          <div class="results-card">
+            <div class="results-icon">
+              <i class="fas fa-trophy"></i>
+            </div>
+            <h2>Quiz Completed!</h2>
+            <div id="finalScore" class="final-score"></div>
+
+            <div class="score-input">
+              <input
+                type="text"
+                id="playerName"
+                placeholder="Enter your name"
+              />
+              <i class="fas fa-user"></i>
+            </div>
+
+            <div class="results-actions">
+              <button class="btn btn-warning" onclick="savePlayerScore()">
+                <i class="fas fa-save"></i>
+                Save Score
+              </button>
+              <button class="btn btn-info" onclick="retryQuiz()">
+                <i class="fas fa-redo"></i>
+                Retry
+              </button>
+              <button class="btn btn-success" onclick="showSection('home')">
+                <i class="fas fa-home"></i>
+                Home
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- History Section -->
+        <section id="history" class="section">
+          <div class="section-header">
+            <button class="back-btn" onclick="showSection('home')">
+              <i class="fas fa-arrow-left"></i>
+            </button>
+            <h2>Quiz History</h2>
+          </div>
+
+          <div class="history-container">
+            <ul id="historyList" class="history-list"></ul>
+          </div>
+        </section>
+
+        <!-- Highscores Section -->
+        <section id="highscores" class="section">
+          <div class="section-header">
+            <button class="back-btn" onclick="showSection('home')">
+              <i class="fas fa-arrow-left"></i>
+            </button>
+            <h2>Leaderboard</h2>
+          </div>
+
+          <div class="leaderboard">
+            <ol id="scoreList" class="score-list"></ol>
+          </div>
+        </section>
+      </div>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
