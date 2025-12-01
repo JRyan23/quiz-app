@@ -629,7 +629,7 @@ class QuizApp {
 
     // Encode the draft as URL parameter
     const draftData = encodeURIComponent(JSON.stringify(draft));
-    const shareURL = `${githubPagesURL}?draft=${draftData}`;
+    const shareURL = `${githubPagesURL}#create?draft=${draftData}`;
 
     navigator.clipboard
       .writeText(shareURL)
@@ -709,3 +709,4 @@ function updateQuestionCount() {
 function setDifficulty(difficulty) {
   quizApp.setDifficulty(difficulty);
 }
+
