@@ -17,6 +17,29 @@ class QuizApp {
     this.loadCategories();
     this.showSection("home");
     this.checkSharedDraft(); // <-- added to load shared draft from URL
+
+    // Load shared draft from URL on page load
+    const urlParams = new URLSearchParams(window.location.search);
+    const draftParam = urlParams.get("draft");
+    
+    if (draftParam) {
+      try {
+        const draft = JSON.parse(decodeURIComponent(draftParam));
+    
+        // Load title + questions into your quiz creator
+        this.customTitle.value = draft.title || "";
+        this.customQuestions = draft.questions || [];
+    
+        // Render the quiz creation section
+        this.renderCustomQuestionInputs();
+        this.showSection("create");
+    
+        this.showNotification(`Loaded shared draft: "${draft.title}"`);
+      } catch (error) {
+        console.error("Error loading shared draft:", error);
+      }
+    }
+
   }
 
   showSection(id) {
@@ -703,3 +726,4 @@ function updateQuestionCount() {
 function setDifficulty(difficulty) {
   quizApp.setDifficulty(difficulty);
 }
+
