@@ -816,7 +816,6 @@ input::placeholder {
   }
 }
 
-/* Responsive Design */
 /* Add these styles to fix mobile responsiveness for Create Quiz section */
 
 /* Mobile Responsive Fixes */
@@ -918,8 +917,14 @@ input::placeholder {
   }
 
   .draft-card .btn {
-    padding: 8px 12px;
-    font-size: 13px;
+    padding: 6px 10px;
+    font-size: 12px;
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .draft-card > div[style*="display:flex"] {
+    gap: 6px !important;
   }
 
   /* Custom Questions Scrollable Area */
@@ -944,4 +949,5 @@ input::placeholder {
     margin-right: 12px;
   }
 }
+
 
