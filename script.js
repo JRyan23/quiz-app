@@ -646,24 +646,29 @@ class QuizApp {
   }
 
   checkSharedDraft() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const shared = urlParams.get("shared");
-    if (!shared) return;
+  const urlParams = new URLSearchParams(window.location.search);
+  const draftParam = urlParams.get("draft");
+  if (!draftParam) return;
 
-    try {
-      const draft = JSON.parse(decodeURIComponent(shared));
-      if (draft && draft.questions && draft.questions.length > 0) {
-        this.customQuestions = draft.questions;
-        this.renderCustomQuestionInputs();
-        this.showSection("create");
-        this.showNotification(
-          `Loaded shared draft: "${draft.title || "Untitled"}"`
-        );
-      }
-    } catch (e) {
-      console.error("Invalid shared draft data");
+  try {
+    const draft = JSON.parse(decodeURIComponent(draftParam));
+
+    if (draft && draft.questions && draft.questions.length > 0) {
+      this.customTitle.value = draft.title || "";
+      this.customQuestions = draft.questions;
+
+      this.renderCustomQuestionInputs();
+      this.showSection("create");
+
+      this.showNotification(
+        `Loaded shared draft: "${draft.title || "Untitled"}"`
+      );
     }
+  } catch (e) {
+    console.error("Invalid draft data", e);
   }
+}
+
 }
 
 // Global instance
@@ -704,5 +709,6 @@ function updateQuestionCount() {
 function setDifficulty(difficulty) {
   quizApp.setDifficulty(difficulty);
 }
+
 
 
